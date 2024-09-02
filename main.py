@@ -5,5 +5,5 @@ import streamlit as st
 st.write('hello')
 st.write('he;;0')
 
-df = read_csv('sp500_index.csv')
+df = read_csv('sp500_stocks.csv')
 st.write(df)#
