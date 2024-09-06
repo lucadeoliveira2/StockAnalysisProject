@@ -19,16 +19,10 @@ stockReturns = stockPrices.pct_change().fillna(0)
 
 stockCumReturns = (stockReturns + 1).cumprod(axis=0)
 
-# Getting Market Cap
+# Sector Data
 
-companyData = read_csv('sp500_companies.csv').sort_values('Symbol')
-companyMC = companyData.Marketcap
-stockLastPrice = stockPrices.drop(columns='SPX').iloc[-1, :]
-stockShares = np.array(companyMC) / np.array(stockLastPrice)
-stockMC = stockPrices.drop(columns='SPX') * stockShares
-
+companyData = read_csv('sp500_companies.csv')
 companySymbols = companyData.Symbol
 companySector = companyData.Sector
-sectorFunc = lambda x: companyData[companyData.Symbol == x.index].Sector
-sectorMC = stockMC.T.groupby(companyData.Sector)
+sectorData = stockPrices.drop(columns='SPX').groupby(companySector, axis=1)
 
