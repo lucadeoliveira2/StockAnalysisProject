@@ -3,7 +3,7 @@ from functions import *
 from data_manip import *
 
 st.write(stockMC)
-st.write(sectorMC.groups.keys())
+#st.write(sectorMC.groups.keys())
 
 aaplPrices, aaplVolumes, aaplReturns = stockPrices.AAPL, stockVolumes.AAPL, stockReturns.AAPL
 spxPrices, spxReturns = stockPrices.SPX, stockReturns.SPX
