@@ -1,3 +1,5 @@
+import pandas as pd
+
 from libraries import *
 
 stockData = read_csv('sp500_stocks_small.csv')
@@ -21,15 +23,26 @@ stockCumReturns = (stockReturns + 1).cumprod(axis=0)
 
 # Getting Market Cap
 
-companyData = read_csv('sp500_companies.csv').sort_values('Symbol')
+companyData = read_csv('sp500_companies.csv').sort_values('Symbol').set_index('Symbol')
 companyMC = companyData.Marketcap
-companySymbols = companyData.Symbol
+companySymbols = companyData.index
 companySector = companyData.Sector
-companySector.index = companySymbols
 
 stockLastPrice = stockPrices.drop(columns='SPX').iloc[-1, :]
 stockShares = np.array(companyMC) / np.array(stockLastPrice)
 stockMC = stockPrices.drop(columns='SPX') * stockShares
+stockMC['SPX'] = stockMC.sum(axis=1)
 
-sectorMC = stockMC.T.groupby(companySector)
+stockWeight = stockMC.apply(lambda x: x / stockMC['SPX'])
+
+# Sector Data
+
+sectorMC = stockMC.T.groupby(companySector).sum().T
+sectorMC['SPX'] = sectorMC.sum(axis=1)
+
+sectorWeight = sectorMC.apply(lambda x: x / sectorMC['SPX']).drop(columns='SPX')
+
+# Stock Sector Weight
+
+stockSectorWeight = pd.DataFrame(np.array(stockMC.drop(columns='SPX')) / np.array(sectorMC[companySector]))
 

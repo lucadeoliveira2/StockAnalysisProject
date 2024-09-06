@@ -4,7 +4,8 @@ from data_manip import *
 
 st.write(stockMC)
 st.write(companySector.index)
-st.write(sectorMC.sum())
+st.write(stockWeight)
+st.write(stockSectorWeight)
 
 aaplPrices, aaplVolumes, aaplReturns = stockPrices.AAPL, stockVolumes.AAPL, stockReturns.AAPL
 spxPrices, spxReturns = stockPrices.SPX, stockReturns.SPX
