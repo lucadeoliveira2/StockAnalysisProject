@@ -1,6 +1,6 @@
 from libraries import *
 
-stockData = read_csv('sp500_stocks.csv')
+stockData = read_csv('sp500_stocks.csv')#
 stockData.Date = pd.to_datetime(stockData.Date, dayfirst=True)
 stockData = stockData.set_index('Date')['2014-09-02':]
 
