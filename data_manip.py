@@ -1,7 +1,7 @@
 from libraries import *
 
-stockData = read_csv('sp500_stocks.csv')#
-stockData.Date = pd.to_datetime(stockData.Date, dayfirst=True)
+stockData = read_csv('sp500_stocks_small.csv')
+stockData.Date = pd.to_datetime(stockData.Date)
 stockData = stockData.set_index('Date')['2014-09-02':]
 
 spxData = read_csv('sp500_index.csv').rename(columns={'S&P500': "Adj Close"})
